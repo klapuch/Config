@@ -1,8 +1,8 @@
 <?php
 declare(strict_types = 1);
-namespace Klapuch;
+namespace Klapuch\Ini;
 
-final class TypedIni implements Ini {
+final class Typed implements Ini {
     const PARSE_SECTIONS = true;
     const CRLF = "\r\n";
     private $path;

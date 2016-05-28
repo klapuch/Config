@@ -1,8 +1,8 @@
 <?php
 declare(strict_types = 1);
-namespace Klapuch;
+namespace Klapuch\Ini;
 
-final class ValidIni implements Ini {
+final class Valid implements Ini {
     private $path;
     private $origin;
 
