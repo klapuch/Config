@@ -13,6 +13,7 @@ interface Ini {
     /**
      * Write new values to the ini file
      * @param array $values
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function write(array $values);
