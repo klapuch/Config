@@ -4,14 +4,14 @@ namespace Klapuch;
 
 interface Ini {
     /**
-     * Read values from the ini file
+     * Reads values from the ini file
      * @throws \InvalidArgumentException
      * @return array
      */
     public function read(): array;
 
     /**
-     * Write new values to the ini file
+     * Writes new values to the ini file
      * @param array $values
      * @throws \InvalidArgumentException
      * @return void
