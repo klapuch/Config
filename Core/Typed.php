@@ -2,6 +2,11 @@
 declare(strict_types = 1);
 namespace Klapuch\Ini;
 
+/**
+ * This ini file can handle with types
+ * Class Typed
+ * @package Klapuch\Ini
+ */
 final class Typed implements Ini {
     const PARSE_SECTIONS = true;
     const CRLF = "\r\n";

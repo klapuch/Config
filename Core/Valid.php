@@ -2,6 +2,11 @@
 declare(strict_types = 1);
 namespace Klapuch\Ini;
 
+/**
+ * This ini file is always valid (exists, writable, readable)
+ * Class Valid
+ * @package Klapuch\Ini
+ */
 final class Valid implements Ini {
     private $path;
     private $origin;
