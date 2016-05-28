@@ -44,7 +44,7 @@ final class TypedIni extends Tester\TestCase {
         $ini = $this->preparedIni();
         file_put_contents(
             $ini,
-            "number = 666 \r\n text = some string \r\n boolean = true \r\n 10 = 2"
+            "number=666\r\ntext=some string\r\nboolean=true\r\n10=2"
         );
         Assert::same(
             ['number' => 666, 'text' => 'some string', 'boolean' => true, 10 => 2],
