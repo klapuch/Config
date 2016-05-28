@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 namespace Klapuch;
 
-final class ParsedIni implements Ini {
+final class TypedIni implements Ini {
     const PARSE_SECTIONS = true;
     const CRLF = "\r\n";
     private $path;

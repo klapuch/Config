@@ -11,18 +11,18 @@ use Klapuch;
 
 require __DIR__ . '/../../bootstrap.php';
 
-final class ParsedIni extends Tester\TestCase {
+final class TypedIni extends Tester\TestCase {
     public function testReading() {
         $ini = $this->preparedIni();
         Assert::same(
             [],
-            (new Klapuch\ParsedIni($ini))
+            (new Klapuch\TypedIni($ini))
             ->read()
         );
         file_put_contents($ini, 'foo = bar');
         Assert::same(
             ['foo' => 'bar'],
-            (new Klapuch\ParsedIni($ini))
+            (new Klapuch\TypedIni($ini))
                 ->read()
         );
     }
@@ -35,7 +35,7 @@ final class ParsedIni extends Tester\TestCase {
         );
         Assert::same(
             ['SECTION' => ['foo' => 'bar']],
-            (new Klapuch\ParsedIni($ini))
+            (new Klapuch\TypedIni($ini))
                 ->read()
         );
     }
@@ -48,20 +48,20 @@ final class ParsedIni extends Tester\TestCase {
         );
         Assert::same(
             ['number' => 666, 'text' => 'some string', 'boolean' => true],
-            (new Klapuch\ParsedIni($ini))
+            (new Klapuch\TypedIni($ini))
                 ->read()
         );
     }
 
     public function testWriting() {
         $ini = $this->preparedIni();
-        (new Klapuch\ParsedIni($ini))->write(['foo' => 'bar', 'bar' => 'foo']);
+        (new Klapuch\TypedIni($ini))->write(['foo' => 'bar', 'bar' => 'foo']);
         Assert::same("foo=bar\r\nbar=foo\r\n", file_get_contents($ini));
     }
 
     public function testWritingWithSection() {
         $ini = $this->preparedIni();
-        (new Klapuch\ParsedIni($ini))->write(
+        (new Klapuch\TypedIni($ini))->write(
             ['SECTION' => ['foo' => 'bar', 'bar' => 'foo']]
         );
         Assert::same(
@@ -72,7 +72,7 @@ final class ParsedIni extends Tester\TestCase {
 
     public function testWritingMultipleSections() {
         $ini = $this->preparedIni();
-        (new Klapuch\ParsedIni($ini))->write(
+        (new Klapuch\TypedIni($ini))->write(
             ['SECTION' => ['foo' => 'bar'], 'SECTION2' => ['bar' => 'foo']]
         );
         Assert::same(
@@ -84,7 +84,7 @@ final class ParsedIni extends Tester\TestCase {
     public function testWritingToExistingValues() {
         $ini = $this->preparedIni();
         file_put_contents($ini, "klapuch=666\r\nyou=1");
-        (new Klapuch\ParsedIni($ini))->write(['foo' => 'bar']);
+        (new Klapuch\TypedIni($ini))->write(['foo' => 'bar']);
         Assert::same(
             "klapuch=666\r\nyou=1\r\nfoo=bar\r\n",
             file_get_contents($ini)
@@ -97,4 +97,4 @@ final class ParsedIni extends Tester\TestCase {
 }
 
 
-(new ParsedIni())->run();
+(new TypedIni())->run();
