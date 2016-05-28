@@ -1,4 +1,19 @@
 {
+  "name": "klapuch/Ini",
+  "type": "library",
+  "description": "Easy way how to work with ini files",
+  "keywords": [
+    "ini",
+    "inifile"
+  ],
+  "homepage": "https://github.com/klapuch/Ini",
+  "authors": [
+    {
+      "name": "Dominik Klapuch",
+      "homepage": "http://www.facedown.cz",
+      "role": "Developer"
+    }
+  ],
   "require": {
     "nette/tester": "^1.7"
   },
