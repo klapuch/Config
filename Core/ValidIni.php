@@ -16,14 +16,15 @@ final class ValidIni implements Ini {
     }
 
     public function read(): array {
-        if(is_readable($this->path) && $this->isIni())
-            return $this->origin->read();
-        throw new \InvalidArgumentException(
-            sprintf(
-                'File "%s" must be readable ini file',
-                $this->path
-            )
-        );
+        if(!is_readable($this->path) || !$this->isIni()) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'File "%s" must be readable ini file',
+                    $this->path
+                )
+            );
+        }
+        return $this->origin->read();
     }
 
     public function write(array $values) {
