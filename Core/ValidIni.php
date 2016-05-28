@@ -6,6 +6,10 @@ final class ValidIni implements Ini {
     private $path;
     private $origin;
 
+    /**
+     * @param string $path
+     * @param Ini $origin
+     */
     public function __construct(string $path, Ini $origin) {
         $this->path = $path;
         $this->origin = $origin;
@@ -34,6 +38,10 @@ final class ValidIni implements Ini {
         $this->origin->write($values);
     }
 
+    /**
+     * Is the $path valid ini file?
+     * @return bool
+     */
     private function isIni(): bool {
         return strtolower(pathinfo($this->path, PATHINFO_EXTENSION)) === 'ini';
     }

@@ -7,6 +7,9 @@ final class ParsedIni implements Ini {
     const CRLF = "\r\n";
     private $path;
 
+    /**
+     * @param string $path
+     */
     public function __construct(string $path) {
         $this->path = $path;
     }
@@ -26,6 +29,11 @@ final class ParsedIni implements Ini {
         );
     }
 
+    /**
+     * Converts array to ini string
+     * @param array $values
+     * @return string
+     */
     private function toIni(array $values): string {
         $ini = '';
         foreach($values as $key => $value) {
@@ -39,6 +47,11 @@ final class ParsedIni implements Ini {
         return $ini;
     }
 
+    /**
+     * Is the given value array?
+     * @param $value
+     * @return bool
+     */
     private function isArray($value): bool {
         return (array)$value === $value;
     }
