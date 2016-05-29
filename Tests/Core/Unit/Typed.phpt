@@ -12,7 +12,7 @@ use Klapuch\Ini;
 require __DIR__ . '/../../bootstrap.php';
 
 final class Typed extends Tester\TestCase {
-    public function testReading() {
+    public function testSuccessfulReading() {
         $ini = $this->preparedIni();
         Assert::same(
             [],
@@ -40,7 +40,7 @@ final class Typed extends Tester\TestCase {
         );
     }
 
-    public function testReadingWithProperType() {
+    public function testCorrectTypes() {
         $ini = $this->preparedIni();
         file_put_contents(
             $ini,
@@ -53,7 +53,7 @@ final class Typed extends Tester\TestCase {
         );
     }
 
-    public function testWriting() {
+    public function testSuccessfulWriting() {
         $ini = $this->preparedIni();
         (new Ini\Typed($ini))->write(['foo' => 'bar', 'bar' => 'foo']);
         Assert::same("foo=bar\r\nbar=foo\r\n", file_get_contents($ini));
@@ -70,7 +70,7 @@ final class Typed extends Tester\TestCase {
         );
     }
 
-    public function testWritingMultipleSections() {
+    public function testWritingWithMultipleSections() {
         $ini = $this->preparedIni();
         (new Ini\Typed($ini))->write(
             ['SECTION' => ['foo' => 'bar'], 'SECTION2' => ['bar' => 'foo']]
