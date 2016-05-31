@@ -14,6 +14,6 @@ final class Fake implements Ini {
     }
 
     public function write(array $values) {
-        $this->ini = array_merge($this->ini, $values);
+        $this->ini = $this->ini + $values;
     }
 }
