@@ -53,7 +53,7 @@ final class Typed implements Ini {
     }
 
     /**
-     * Is the given value array?
+     * Is the given value an array?
      * @param $value
      * @return bool
      */
