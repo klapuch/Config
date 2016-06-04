@@ -30,7 +30,7 @@ final class Typed implements Ini {
     public function write(array $values) {
         file_put_contents(
             $this->path,
-            $this->toIni(array_merge($this->read(), $values))
+            $this->toIni($this->read() + $values)
         );
     }
 

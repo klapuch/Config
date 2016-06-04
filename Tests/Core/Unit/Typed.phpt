@@ -91,6 +91,17 @@ final class Typed extends Tester\TestCase {
         );
     }
 
+    public function testWritingWithoutDuplication() {
+        $ini = $this->preparedIni();
+        file_put_contents($ini, "klapuch=666\r\nyou=1");
+        (new Ini\Typed($ini))->write(['klapuch' => 666]);
+        (new Ini\Typed($ini))->write(['klapuch' => 666]);
+        Assert::same(
+            "klapuch=666\r\nyou=1\r\n",
+            file_get_contents($ini)
+        );
+    }
+
     private function preparedIni() {
         return Tester\FileMock::create('', 'ini');
     }
