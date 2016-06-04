@@ -29,10 +29,10 @@ final class Valid extends Tester\TestCase {
 
 
     /**
-     * @throws \InvalidArgumentException File "unknownFile.ini" must be writable ini file
+     * @throws \InvalidArgumentException File "unknown.ini" must be writable ini file
      */
     public function testWritingToUnknownFile() {
-        (new Ini\Valid('unknownFile.ini', new Ini\Fake))->write(['foo' => 'bar']);
+        (new Ini\Valid('unknown.ini', new Ini\Fake))->write(['foo' => 'bar']);
     }
 
     /**

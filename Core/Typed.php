@@ -28,14 +28,20 @@ final class Typed implements Ini {
     }
 
     public function write(array $values) {
-        file_put_contents(
-            $this->path,
-            $this->toIni($this->read() + $values)
-        );
+        file_put_contents($this->path, $this->toIni($this->read() + $values));
+    }
+
+    public function remove(string $key, string $section = null) {
+        $ini = $this->read();
+        if($section === null)
+            unset($ini[$key]);
+        else
+            unset($ini[$section][$key]);
+        file_put_contents($this->path, $this->toIni($ini));
     }
 
     /**
-     * Converts array to ini format
+     * Converts the array to ini format
      * @param array $values
      * @return string
      */

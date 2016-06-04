@@ -44,8 +44,13 @@ final class Valid implements Ini {
         $this->origin->write($values);
     }
 
+    public function remove(string $key, string $section = null) {
+        $this->origin->remove($key, $section);
+    }
+
+
     /**
-     * Is the $path valid ini file?
+     * Is the $this->path valid ini file?
      * @return bool
      */
     private function isIni(): bool {

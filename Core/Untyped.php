@@ -25,6 +25,11 @@ final class Untyped implements Ini {
         $this->origin->write($values);
     }
 
+    public function remove(string $key, string $section = null) {
+        $this->origin->remove($key, $section);
+    }
+
+
     /**
      * The given array is transformed to united type
      * @param array $ini

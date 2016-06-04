@@ -17,4 +17,12 @@ interface Ini {
      * @return void
      */
     public function write(array $values);
+
+    /**
+     * Removes value and key by the given key and optionally by section
+     * @param string $key
+     * @param string|null $section
+     * @return void
+     */
+    public function remove(string $key, string $section = null);
 }
