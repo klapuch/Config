@@ -35,7 +35,7 @@ final class Typed implements Ini {
     }
 
     /**
-     * Converts array to ini string
+     * Converts array to ini format
      * @param array $values
      * @return string
      */
