@@ -25,7 +25,7 @@ final class Untyped implements Ini {
         $this->origin->write($values);
     }
 
-    public function remove(string $key, string $section = null) {
+    public function remove($key, string $section = null) {
         $this->origin->remove($key, $section);
     }
 

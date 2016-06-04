@@ -31,7 +31,7 @@ final class Typed implements Ini {
         file_put_contents($this->path, $this->toIni($this->read() + $values));
     }
 
-    public function remove(string $key, string $section = null) {
+    public function remove($key, string $section = null) {
         $ini = $this->read();
         if($section === null)
             unset($ini[$key]);

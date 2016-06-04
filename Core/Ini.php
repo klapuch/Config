@@ -20,9 +20,9 @@ interface Ini {
 
     /**
      * Removes value and key by the given key and optionally by section
-     * @param string $key
+     * @param mixed $key
      * @param string|null $section
      * @return void
      */
-    public function remove(string $key, string $section = null);
+    public function remove($key, string $section = null);
 }
