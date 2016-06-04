@@ -18,8 +18,9 @@ final class Fake implements Ini {
     }
 
     public function remove(string $key, string $section = null) {
-        
+        if($section === null)
+            unset($this->ini[$key]);
+        else
+            unset($this->ini[$section][$key]);
     }
-
-
 }
