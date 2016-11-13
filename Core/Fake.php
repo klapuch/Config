@@ -3,24 +3,24 @@ declare(strict_types = 1);
 namespace Klapuch\Ini;
 
 final class Fake implements Ini {
-    private $ini;
+	private $ini;
 
-    public function __construct(array $ini = []) {
-        $this->ini = $ini;
-    }
+	public function __construct(array $ini = []) {
+		$this->ini = $ini;
+	}
 
-    public function read(): array {
-        return $this->ini;
-    }
+	public function read(): array {
+		return $this->ini;
+	}
 
-    public function write(array $values) {
-        $this->ini = $this->ini + $values;
-    }
+	public function write(array $values) {
+		$this->ini = $this->ini + $values;
+	}
 
-    public function remove($key, string $section = null) {
-        if($section === null)
-            unset($this->ini[$key]);
-        else
-            unset($this->ini[$section][$key]);
-    }
+	public function remove($key, string $section = null) {
+		if($section === null)
+			unset($this->ini[$key]);
+		else
+			unset($this->ini[$section][$key]);
+	}
 }
