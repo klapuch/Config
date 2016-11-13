@@ -2,6 +2,9 @@
 declare(strict_types = 1);
 namespace Klapuch\Ini;
 
+/**
+ * Fake
+ */
 final class Fake implements Ini {
 	private $ini;
 

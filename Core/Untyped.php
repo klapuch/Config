@@ -3,16 +3,11 @@ declare(strict_types = 1);
 namespace Klapuch\Ini;
 
 /**
- * This ini file can handle only with strings
- * Class Untyped
- * @package Klapuch\Ini
+ * All types are considered as a string
  */
 final class Untyped implements Ini {
 	private $origin;
 
-	/**
-	 * @param Ini $origin
-	 */
 	public function __construct(Ini $origin) {
 		$this->origin = $origin;
 	}

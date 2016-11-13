@@ -3,18 +3,12 @@ declare(strict_types = 1);
 namespace Klapuch\Ini;
 
 /**
- * This ini file is always valid (exists, writable, readable)
- * Class Valid
- * @package Klapuch\Ini
+ * Always valid (exists, writable, readable) file
  */
 final class Valid implements Ini {
 	private $path;
 	private $origin;
 
-	/**
-	 * @param string $path
-	 * @param Ini $origin
-	 */
 	public function __construct(string $path, Ini $origin) {
 		$this->path = $path;
 		$this->origin = $origin;

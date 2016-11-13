@@ -3,18 +3,13 @@ declare(strict_types = 1);
 namespace Klapuch\Ini;
 
 /**
- * This ini file can handle with types
- * Class Typed
- * @package Klapuch\Ini
+ * Can handle with types
  */
 final class Typed implements Ini {
 	const PARSE_SECTIONS = true;
 	const CRLF = "\r\n";
 	private $path;
 
-	/**
-	 * @param string $path
-	 */
 	public function __construct(string $path) {
 		$this->path = $path;
 	}

@@ -4,14 +4,14 @@ namespace Klapuch\Ini;
 
 interface Ini {
 	/**
-	 * Reads values from the ini file
+	 * Read values from the ini file
 	 * @throws \InvalidArgumentException
 	 * @return array
 	 */
 	public function read(): array;
 
 	/**
-	 * Writes new values to the ini file
+	 * Write new values to the ini file
 	 * @param array $values
 	 * @throws \InvalidArgumentException
 	 * @return void
@@ -19,7 +19,7 @@ interface Ini {
 	public function write(array $values);
 
 	/**
-	 * Removes value and key by the given key and optionally by section
+	 * Remove value and key by the given key and optionally by section
 	 * @param mixed $key
 	 * @param string|null $section
 	 * @return void
