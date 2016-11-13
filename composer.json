@@ -2,24 +2,28 @@
   "name": "klapuch/ini",
   "type": "library",
   "description": "Easy way how to work with ini files",
-  "keywords": [
-    "ini",
-    "inifile"
-  ],
   "homepage": "https://github.com/klapuch/Ini",
+  "keywords": [
+	"ini",
+	"read",
+    "write"
+  ],
   "authors": [
-    {
-      "name": "Dominik Klapuch",
-      "homepage": "http://www.facedown.cz",
-      "role": "Developer"
-    }
+	{
+	  "name": "Dominik Klapuch",
+	  "email": "klapuchdominik@gmail.com",
+	  "homepage": "https://www.github.com/klapuch",
+	  "role": "Developer"
+	}
   ],
   "require": {
-    "nette/tester": "^1.7"
+	"nette/tester": "^1.7"
   },
   "autoload": {
-    "psr-4": {
-      "Klapuch\\Ini\\": "Core/"
-    }
+	"psr-4": {
+	  "Klapuch\\Ini\\": [
+		"Core/"
+	  ]
+	}
   }
 }
