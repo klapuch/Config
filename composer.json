@@ -6,7 +6,7 @@
   "keywords": [
 	"ini",
 	"read",
-    "write"
+	"write"
   ],
   "authors": [
 	{
@@ -17,10 +17,12 @@
 	}
   ],
   "require": {
-    "php": ">=7.0"
+	"php": ">=7.0"
   },
   "require-dev": {
-    "nette/tester": "^1.7"
+	"nette/tester": "^1.7",
+	"object-calisthenics/phpcs-calisthenics-rules": "^2.0",
+	"sebastian/phpcpd": "*"
   },
   "autoload": {
 	"psr-4": {
