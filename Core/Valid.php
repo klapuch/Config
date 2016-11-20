@@ -15,7 +15,7 @@ final class Valid implements Ini {
 	}
 
 	public function read(): array {
-		if(!is_readable($this->path) || !$this->isIni()) {
+		if(!is_readable($this->path) || !$this->isIni($this->path)) {
 			throw new \InvalidArgumentException(
 				sprintf(
 					'File "%s" must be readable ini file',
@@ -27,7 +27,7 @@ final class Valid implements Ini {
 	}
 
 	public function write(array $values) {
-		if(!is_writable($this->path) || !$this->isIni()) {
+		if(!is_writable($this->path) || !$this->isIni($this->path)) {
 			throw new \InvalidArgumentException(
 				sprintf(
 					'File "%s" must be writable ini file',
@@ -43,10 +43,11 @@ final class Valid implements Ini {
 	}
 
 	/**
-	 * Is the $this->path valid ini file?
+	 * Is the path valid ini file?
+	 * @param string $path
 	 * @return bool
 	 */
-	private function isIni(): bool {
-		return strtolower(pathinfo($this->path, PATHINFO_EXTENSION)) === 'ini';
+	private function isIni(string $path): bool {
+		return strtolower(pathinfo($path, PATHINFO_EXTENSION)) === 'ini';
 	}
 }

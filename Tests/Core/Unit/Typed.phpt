@@ -104,6 +104,20 @@ final class Typed extends Tester\TestCase {
 		Assert::same("foo=666\r\n[SECTION]\r\n", file_get_contents($ini));
 	}
 
+	public function testRemovingSameNamedSectionAsKey() {
+		$ini = $this->preparedIni();
+		file_put_contents($ini, "foo=666\r\n[bar]\r\nbar=123\r\n");
+		(new Ini\Typed($ini))->remove('bar', 'bar');
+		Assert::same("foo=666\r\n[bar]\r\n", file_get_contents($ini));
+	}
+
+	public function testRemovingNullSection() {
+		$ini = $this->preparedIni();
+		file_put_contents($ini, "foo=666\r\n[null]\r\nbar=123\r\n");
+		(new Ini\Typed($ini))->remove('bar', null);
+		Assert::same("foo=666\r\n[null]\r\nbar=123\r\n", file_get_contents($ini));
+	}
+
 	private function preparedIni() {
 		return Tester\FileMock::create('', 'ini');
 	}

@@ -30,11 +30,6 @@ final class Untyped implements Ini {
 	 * @return array
 	 */
 	private function toUnitedType(array $ini): array {
-		return array_map(
-			function($value) {
-				return (string)$value;
-			},
-			$ini
-		);
+		return array_map('strval', $ini);
 	}
 }

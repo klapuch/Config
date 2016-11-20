@@ -30,31 +30,32 @@ final class Typed implements Ini {
 		$ini = $this->read();
 		if($section === null)
 			unset($ini[$key]);
-		else
-			unset($ini[$section][$key]);
+		unset($ini[$section][$key]);
 		file_put_contents($this->path, $this->toIni($ini));
 	}
 
 	/**
-	 * Converts the array to ini format
+	 * Convert the array to ini format
 	 * @param array $values
 	 * @return string
 	 */
 	private function toIni(array $values): string {
-		$ini = '';
-		foreach($values as $key => $value) {
-			if($this->isArray($value)) {
-				$ini .= sprintf('[%s]', $key) . self::CRLF;
-				$ini .= $this->toIni($value);
-			} else
-				$ini .= sprintf('%s=%s', $key, $value) . self::CRLF;
-		}
-		return $ini;
+		return implode(
+			array_map(
+				function(string $key, $value): string {
+					return $this->isArray($value)
+						? sprintf('[%s]', $key) . self::CRLF . $this->toIni($value)
+						: sprintf('%s=%s', $key, $value) . self::CRLF;
+				},
+				array_keys($values),
+				$values
+			)
+		);
 	}
 
 	/**
 	 * Is the given value an array?
-	 * @param $value
+	 * @param mixed $value
 	 * @return bool
 	 */
 	private function isArray($value): bool {
