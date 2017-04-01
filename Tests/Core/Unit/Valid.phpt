@@ -58,6 +58,25 @@ final class Valid extends Tester\TestCase {
 		);
 	}
 
+	public function testCaseInsensitiveExtension() {
+		Assert::noError(
+			function() {
+				(new Ini\Valid(
+					Tester\FileMock::create('', 'iNi'),
+					new Ini\Fake
+				))->write([]);
+			}
+		);
+		Assert::noError(
+			function() {
+				(new Ini\Valid(
+					Tester\FileMock::create('', 'iNi'),
+					new Ini\Fake
+				))->read();
+			}
+		);
+	}
+
 	private function preparedTxt() {
 		return Tester\FileMock::create('', 'txt');
 	}

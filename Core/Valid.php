@@ -48,6 +48,6 @@ final class Valid implements Ini {
 	 * @return bool
 	 */
 	private function isIni(string $path): bool {
-		return strtolower(pathinfo($path, PATHINFO_EXTENSION)) === 'ini';
+		return strcasecmp(pathinfo($path, PATHINFO_EXTENSION), 'ini') === 0;
 	}
 }
