@@ -23,6 +23,17 @@ final class Combined extends Tester\TestCase {
 		);
 	}
 
+	public function testNotAffectingOtherDuringCombibing() {
+		Assert::same(
+			['foo' => 'bar', 'bar' => 'baz', 'how' => 'good'],
+			(new Ini\Combined(
+				new Ini\Fake(['foo' => 'baz']),
+				new Ini\Fake(['bar' => 'baz']),
+				new Ini\Fake(['foo' => 'bar', 'how' => 'good'])
+			))->read()
+		);
+	}
+
 	public function testCombiningSectionsWithMerge() {
 		Assert::same(
 			['section' => ['foo' => 'bar', 'how' => 'good']],
