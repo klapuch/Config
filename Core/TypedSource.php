@@ -5,7 +5,7 @@ namespace Klapuch\Ini;
 /**
  * Can handle with types
  */
-final class Typed implements Ini {
+final class TypedSource implements Source {
 	private const PARSE_SECTIONS = true;
 	private const CRLF = "\r\n";
 	private $path;

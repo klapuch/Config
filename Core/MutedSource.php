@@ -5,10 +5,10 @@ namespace Klapuch\Ini;
 /**
  * Muted every error - suitable for files which may not exists
  */
-final class Muted implements Ini {
+final class MutedSource implements Source {
 	private $origin;
 
-	public function __construct(Ini $origin) {
+	public function __construct(Source $origin) {
 		$this->origin = $origin;
 	}
 

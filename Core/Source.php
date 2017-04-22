@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 namespace Klapuch\Ini;
 
-interface Ini {
+interface Source {
 	/**
 	 * Read values from the ini file
 	 * @throws \InvalidArgumentException

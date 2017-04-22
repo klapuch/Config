@@ -5,17 +5,17 @@ namespace Klapuch\Ini;
 /**
  * Multiple combined ini files behaving as a single one
  */
-final class Combined implements Ini {
+final class CombinedSource implements Source {
 	private $origins;
 
-	public function __construct(Ini ...$origins) {
+	public function __construct(Source ...$origins) {
 		$this->origins = $origins;
 	}
 
 	public function read(): array {
 		return array_reduce(
 			$this->origins,
-			function(array $combined, Ini $origin): array {
+			function(array $combined, Source $origin): array {
 				return $this->merge($combined, $origin->read());
 			},
 			[]

@@ -5,7 +5,7 @@ namespace Klapuch\Ini;
 /**
  * Fake
  */
-final class Fake implements Ini {
+final class FakeSource implements Source {
 	private $ini;
 
 	public function __construct(array $ini = []) {

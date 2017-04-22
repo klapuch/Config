@@ -5,11 +5,11 @@ namespace Klapuch\Ini;
 /**
  * Always valid (exists, writable, readable) file
  */
-final class Valid implements Ini {
+final class ValidSource implements Source {
 	private $path;
 	private $origin;
 
-	public function __construct(string $path, Ini $origin) {
+	public function __construct(string $path, Source $origin) {
 		$this->path = $path;
 		$this->origin = $origin;
 	}

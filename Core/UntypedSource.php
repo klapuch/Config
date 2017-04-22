@@ -5,10 +5,10 @@ namespace Klapuch\Ini;
 /**
  * All types are considered as a string
  */
-final class Untyped implements Ini {
+final class UntypedSource implements Source {
 	private $origin;
 
-	public function __construct(Ini $origin) {
+	public function __construct(Source $origin) {
 		$this->origin = $origin;
 	}
 

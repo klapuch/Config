@@ -12,12 +12,12 @@ use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
 
-final class Muted extends Tester\TestCase {
+final class MutedSource extends Tester\TestCase {
 	public function testReadingNothingOnThrownError(): void {
 		Assert::same(
 			[],
-			(new Ini\Muted(
-				new Ini\Valid('foo.bar', new Ini\Typed('foo.bar'))
+			(new Ini\MutedSource(
+				new Ini\ValidSource('foo.bar', new Ini\TypedSource('foo.bar'))
 			))->read()
 		);
 	}
@@ -26,27 +26,27 @@ final class Muted extends Tester\TestCase {
 		$file = Tester\FileMock::create('foo=bar', 'ini');
 		Assert::same(
 			['foo' => 'bar'],
-			(new Ini\Muted(
-				new Ini\Valid($file, new Ini\Typed($file))
+			(new Ini\MutedSource(
+				new Ini\ValidSource($file, new Ini\TypedSource($file))
 			))->read()
 		);
 	}
 
 	public function testWritingNothingOnThrownError(): void {
 		Assert::noError(function() {
-			(new Ini\Muted(
-				new Ini\Valid('foo.bar', new Ini\Typed('foo.bar'))
+			(new Ini\MutedSource(
+				new Ini\ValidSource('foo.bar', new Ini\TypedSource('foo.bar'))
 			))->write(['foo']);
 		});
 	}
 
 	public function testRemovingNothingOnThrownError(): void {
 		Assert::noError(function() {
-			(new Ini\Muted(
-				new Ini\Valid('foo.bar', new Ini\Typed('foo.bar'))
+			(new Ini\MutedSource(
+				new Ini\ValidSource('foo.bar', new Ini\TypedSource('foo.bar'))
 			))->remove('foo', 'bar');
 		});
 	}
 }
 
-(new Muted())->run();
+(new MutedSource())->run();

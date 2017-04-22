@@ -12,33 +12,33 @@ use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
 
-final class Valid extends Tester\TestCase {
+final class ValidSource extends Tester\TestCase {
 	/**
 	 * @throws \InvalidArgumentException File "unknownFile.ini" must be readable ini file
 	 */
 	public function testReadingUnknownFile(): void {
-		(new Ini\Valid('unknownFile.ini', new Ini\Fake))->read();
+		(new Ini\ValidSource('unknownFile.ini', new Ini\FakeSource))->read();
 	}
 
 	/**
 	 * @throws \InvalidArgumentException File "mock://1.txt" must be readable ini file
 	 */
 	public function testReadingNonIniFile(): void {
-		(new Ini\Valid($this->preparedTxt(), new Ini\Fake))->read();
+		(new Ini\ValidSource($this->preparedTxt(), new Ini\FakeSource))->read();
 	}
 
 	/**
 	 * @throws \InvalidArgumentException File "unknown.ini" must be writable ini file
 	 */
 	public function testWritingUnknownFile(): void {
-		(new Ini\Valid('unknown.ini', new Ini\Fake))->write(['foo' => 'bar']);
+		(new Ini\ValidSource('unknown.ini', new Ini\FakeSource))->write(['foo' => 'bar']);
 	}
 
 	/**
 	 * @throws \InvalidArgumentException File "mock://1.txt" must be writable ini file
 	 */
 	public function testWritingNonIniFile(): void {
-		(new Ini\Valid($this->preparedTxt(), new Ini\Fake))->write(
+		(new Ini\ValidSource($this->preparedTxt(), new Ini\FakeSource))->write(
 			['foo' => 'bar']
 		);
 	}
@@ -46,7 +46,7 @@ final class Valid extends Tester\TestCase {
 	public function testWritableFile(): void {
 		Assert::noError(
 			function() {
-				(new Ini\Valid($this->preparedIni(), new Ini\Fake))->write([]);
+				(new Ini\ValidSource($this->preparedIni(), new Ini\FakeSource))->write([]);
 			}
 		);
 	}
@@ -54,7 +54,7 @@ final class Valid extends Tester\TestCase {
 	public function testReadableFile(): void {
 		Assert::noError(
 			function() {
-				(new Ini\Valid($this->preparedIni(), new Ini\Fake))->write([]);
+				(new Ini\ValidSource($this->preparedIni(), new Ini\FakeSource))->write([]);
 			}
 		);
 	}
@@ -62,17 +62,17 @@ final class Valid extends Tester\TestCase {
 	public function testCaseInsensitiveExtension(): void {
 		Assert::noError(
 			function() {
-				(new Ini\Valid(
+				(new Ini\ValidSource(
 					Tester\FileMock::create('', 'iNi'),
-					new Ini\Fake
+					new Ini\FakeSource
 				))->write([]);
 			}
 		);
 		Assert::noError(
 			function() {
-				(new Ini\Valid(
+				(new Ini\ValidSource(
 					Tester\FileMock::create('', 'iNi'),
-					new Ini\Fake
+					new Ini\FakeSource
 				))->read();
 			}
 		);
@@ -87,4 +87,4 @@ final class Valid extends Tester\TestCase {
 	}
 }
 
-(new Valid)->run();
+(new ValidSource)->run();

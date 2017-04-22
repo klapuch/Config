@@ -12,9 +12,9 @@ use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
 
-final class Untyped extends Tester\TestCase {
+final class UntypedSource extends Tester\TestCase {
 	public function testCorrectTypes(): void {
-		$ini = new Ini\Fake(
+		$ini = new Ini\FakeSource(
 			[
 				'number' => 666,
 				'text' => 'some string',
@@ -29,9 +29,9 @@ final class Untyped extends Tester\TestCase {
 				'boolean' => '1',
 				10 => '2',
 			],
-			(new Ini\Untyped($ini))->read()
+			(new Ini\UntypedSource($ini))->read()
 		);
 	}
 }
 
-(new Untyped())->run();
+(new UntypedSource())->run();
