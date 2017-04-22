@@ -1,18 +1,19 @@
 <?php
+declare(strict_types = 1);
 /**
  * @testCase
- * @phpVersion > 7.0.0
+ * @phpVersion > 7.1.0
  */
-namespace Klapuch\Unit;
+namespace Klapuch\Ini\Unit;
 
 use Klapuch\Ini;
 use Tester;
 use Tester\Assert;
 
-require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 final class Untyped extends Tester\TestCase {
-	public function testCorrectTypes() {
+	public function testCorrectTypes(): void {
 		$ini = new Ini\Fake(
 			[
 				'number' => 666,

@@ -15,7 +15,7 @@ final class Valid implements Ini {
 	}
 
 	public function read(): array {
-		if(!is_readable($this->path) || !$this->isIni($this->path)) {
+		if (!is_readable($this->path) || !$this->isIni($this->path)) {
 			throw new \InvalidArgumentException(
 				sprintf(
 					'File "%s" must be readable ini file',
@@ -26,8 +26,8 @@ final class Valid implements Ini {
 		return $this->origin->read();
 	}
 
-	public function write(array $values) {
-		if(!is_writable($this->path) || !$this->isIni($this->path)) {
+	public function write(array $values): void {
+		if (!is_writable($this->path) || !$this->isIni($this->path)) {
 			throw new \InvalidArgumentException(
 				sprintf(
 					'File "%s" must be writable ini file',
@@ -38,7 +38,7 @@ final class Valid implements Ini {
 		$this->origin->write($values);
 	}
 
-	public function remove($key, string $section = null) {
+	public function remove($key, string $section = null): void {
 		$this->origin->remove($key, $section);
 	}
 

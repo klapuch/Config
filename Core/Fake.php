@@ -16,12 +16,12 @@ final class Fake implements Ini {
 		return $this->ini;
 	}
 
-	public function write(array $values) {
+	public function write(array $values): void {
 		$this->ini = $this->ini + $values;
 	}
 
-	public function remove($key, string $section = null) {
-		if($section === null)
+	public function remove($key, string $section = null): void {
+		if ($section === null)
 			unset($this->ini[$key]);
 		unset($this->ini[$section][$key]);
 	}

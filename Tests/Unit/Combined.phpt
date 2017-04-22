@@ -1,18 +1,19 @@
 <?php
+declare(strict_types = 1);
 /**
  * @testCase
- * @phpVersion > 7.0.0
+ * @phpVersion > 7.1.0
  */
-namespace Klapuch\Unit;
+namespace Klapuch\Ini\Unit;
 
 use Klapuch\Ini;
 use Tester;
 use Tester\Assert;
 
-require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 final class Combined extends Tester\TestCase {
-	public function testCombiningFlatWithPrioritizingLast() {
+	public function testCombiningFlatWithPrioritizingLast(): void {
 		Assert::same(
 			['foo' => 'bar'],
 			(new Ini\Combined(
@@ -23,7 +24,7 @@ final class Combined extends Tester\TestCase {
 		);
 	}
 
-	public function testNotAffectingOtherDuringCombibing() {
+	public function testNotAffectingOtherDuringCombibing(): void {
 		Assert::same(
 			['foo' => 'bar', 'bar' => 'baz', 'how' => 'good'],
 			(new Ini\Combined(
@@ -34,7 +35,7 @@ final class Combined extends Tester\TestCase {
 		);
 	}
 
-	public function testCombiningSectionsWithMerge() {
+	public function testCombiningSectionsWithMerge(): void {
 		Assert::same(
 			['section' => ['foo' => 'bar', 'how' => 'good']],
 			(new Ini\Combined(
@@ -45,7 +46,7 @@ final class Combined extends Tester\TestCase {
 		);
 	}
 
-	public function testWritingToAll() {
+	public function testWritingToAll(): void {
 		$a = new Ini\Fake(['a' => 'baz']);
 		$b = new Ini\Fake(['b' => 'bax']);
 		$c = new Ini\Fake(['c' => 'bar']);
@@ -55,7 +56,7 @@ final class Combined extends Tester\TestCase {
 		Assert::same(['c' => 'bar', 'how' => 'good'], $c->read());
 	}
 
-	public function testRemovingFromAll() {
+	public function testRemovingFromAll(): void {
 		$a = new Ini\Fake(['a' => 'baz', 'how' => 'good']);
 		$b = new Ini\Fake(['b' => 'bax', 'how' => 'good']);
 		$c = new Ini\Fake(['c' => 'bar', 'how' => 'good']);

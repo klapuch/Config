@@ -16,11 +16,11 @@ final class Untyped implements Ini {
 		return $this->toUnitedType($this->origin->read());
 	}
 
-	public function write(array $values) {
+	public function write(array $values): void {
 		$this->origin->write($values);
 	}
 
-	public function remove($key, string $section = null) {
+	public function remove($key, string $section = null): void {
 		$this->origin->remove($key, $section);
 	}
 

@@ -1,18 +1,19 @@
 <?php
+declare(strict_types = 1);
 /**
  * @testCase
- * @phpVersion > 7.0.0
+ * @phpVersion > 7.1.0
  */
-namespace Klapuch\Unit;
+namespace Klapuch\Ini\Unit;
 
 use Klapuch\Ini;
 use Tester;
 use Tester\Assert;
 
-require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 final class Muted extends Tester\TestCase {
-	public function testReadingNothingOnThrownError() {
+	public function testReadingNothingOnThrownError(): void {
 		Assert::same(
 			[],
 			(new Ini\Muted(
@@ -21,7 +22,7 @@ final class Muted extends Tester\TestCase {
 		);
 	}
 
-	public function testReadingKnownFileWithContent() {
+	public function testReadingKnownFileWithContent(): void {
 		$file = Tester\FileMock::create('foo=bar', 'ini');
 		Assert::same(
 			['foo' => 'bar'],
@@ -31,7 +32,7 @@ final class Muted extends Tester\TestCase {
 		);
 	}
 
-	public function testWritingNothingOnThrownError() {
+	public function testWritingNothingOnThrownError(): void {
 		Assert::noError(function() {
 			(new Ini\Muted(
 				new Ini\Valid('foo.bar', new Ini\Typed('foo.bar'))
@@ -39,7 +40,7 @@ final class Muted extends Tester\TestCase {
 		});
 	}
 
-	public function testRemovingNothingOnThrownError() {
+	public function testRemovingNothingOnThrownError(): void {
 		Assert::noError(function() {
 			(new Ini\Muted(
 				new Ini\Valid('foo.bar', new Ini\Typed('foo.bar'))

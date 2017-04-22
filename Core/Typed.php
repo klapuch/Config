@@ -6,8 +6,8 @@ namespace Klapuch\Ini;
  * Can handle with types
  */
 final class Typed implements Ini {
-	const PARSE_SECTIONS = true;
-	const CRLF = "\r\n";
+	private const PARSE_SECTIONS = true;
+	private const CRLF = "\r\n";
 	private $path;
 
 	public function __construct(string $path) {
@@ -22,13 +22,13 @@ final class Typed implements Ini {
 		);
 	}
 
-	public function write(array $values) {
+	public function write(array $values): void {
 		file_put_contents($this->path, $this->toIni($this->read() + $values));
 	}
 
-	public function remove($key, string $section = null) {
+	public function remove($key, string $section = null): void {
 		$ini = $this->read();
-		if($section === null)
+		if ($section === null)
 			unset($ini[$key]);
 		unset($ini[$section][$key]);
 		file_put_contents($this->path, $this->toIni($ini));
@@ -59,6 +59,6 @@ final class Typed implements Ini {
 	 * @return bool
 	 */
 	private function isArray($value): bool {
-		return (array)$value === $value;
+		return (array) $value === $value;
 	}
 }

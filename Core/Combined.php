@@ -22,12 +22,12 @@ final class Combined implements Ini {
 		);
 	}
 
-	public function write(array $values) {
+	public function write(array $values): void {
 		foreach ($this->origins as $origin)
 			$origin->write($values);
 	}
 
-	public function remove($key, string $section = null) {
+	public function remove($key, string $section = null): void {
 		foreach ($this->origins as $origin)
 			$origin->remove($key, $section);
 	}
@@ -38,8 +38,7 @@ final class Combined implements Ini {
 			function(array $array1, $key) use ($array2): array {
 				if (is_array($array2[$key]) && isset($array1[$key]) && is_array($array1[$key]))
 					$array1[$key] = $this->merge($array1[$key], $array2[$key]);
-				else
-					$array1[$key] = $array2[$key];
+				else $array1[$key] = $array2[$key];
 				return $array1;
 			},
 			$array1

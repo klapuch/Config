@@ -16,7 +16,7 @@ interface Ini {
 	 * @throws \InvalidArgumentException
 	 * @return void
 	 */
-	public function write(array $values);
+	public function write(array $values): void;
 
 	/**
 	 * Remove value and key by the given key and optionally by section
@@ -24,5 +24,5 @@ interface Ini {
 	 * @param string|null $section
 	 * @return void
 	 */
-	public function remove($key, string $section = null);
+	public function remove($key, string $section = null): void;
 }

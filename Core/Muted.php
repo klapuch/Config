@@ -18,15 +18,15 @@ final class Muted implements Ini {
 		}, []);
 	}
 
-	public function write(array $values) {
+	public function write(array $values): void {
 		$this->asMuted(function() use ($values) {
-			return $this->origin->write($values);
+			$this->origin->write($values);
 		});
 	}
 
-	public function remove($key, string $section = null) {
+	public function remove($key, string $section = null): void {
 		$this->asMuted(function() use ($key, $section) {
-			return $this->origin->remove($key, $section);
+			$this->origin->remove($key, $section);
 		});
 	}
 

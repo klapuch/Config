@@ -1,25 +1,26 @@
 <?php
+declare(strict_types = 1);
 /**
  * @testCase
- * @phpVersion > 7.0.0
+ * @phpVersion > 7.1.0
  */
-namespace Klapuch\Unit;
+namespace Klapuch\Ini\Unit;
 
 use Klapuch\Ini;
 use Tester;
 use Tester\Assert;
 
-require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 final class Typed extends Tester\TestCase {
-	public function testSuccessfulReading() {
+	public function testSuccessfulReading(): void {
 		$ini = $this->preparedIni();
 		Assert::same([], (new Ini\Typed($ini))->read());
 		file_put_contents($ini, 'foo = bar');
 		Assert::same(['foo' => 'bar'], (new Ini\Typed($ini))->read());
 	}
 
-	public function testReadingWithSections() {
+	public function testReadingWithSections(): void {
 		$ini = $this->preparedIni();
 		file_put_contents($ini, '[SECTION]foo = bar');
 		Assert::same(
@@ -28,7 +29,7 @@ final class Typed extends Tester\TestCase {
 		);
 	}
 
-	public function testCorrectTypes() {
+	public function testCorrectTypes(): void {
 		$ini = $this->preparedIni();
 		file_put_contents(
 			$ini,
@@ -40,13 +41,13 @@ final class Typed extends Tester\TestCase {
 		);
 	}
 
-	public function testSuccessfulWriting() {
+	public function testSuccessfulWriting(): void {
 		$ini = $this->preparedIni();
 		(new Ini\Typed($ini))->write(['foo' => 'bar', 'bar' => 'foo']);
 		Assert::same("foo=bar\r\nbar=foo\r\n", file_get_contents($ini));
 	}
 
-	public function testWritingWithSection() {
+	public function testWritingWithSection(): void {
 		$ini = $this->preparedIni();
 		(new Ini\Typed($ini))->write(
 			['SECTION' => ['foo' => 'bar', 'bar' => 'foo']]
@@ -57,7 +58,7 @@ final class Typed extends Tester\TestCase {
 		);
 	}
 
-	public function testWritingWithMultipleSections() {
+	public function testWritingWithMultipleSections(): void {
 		$ini = $this->preparedIni();
 		(new Ini\Typed($ini))->write(
 			['SECTION' => ['foo' => 'bar'], 'SECTION2' => ['bar' => 'foo']]
@@ -68,14 +69,14 @@ final class Typed extends Tester\TestCase {
 		);
 	}
 
-	public function testWritingToExistingValues() {
+	public function testWritingToExistingValues(): void {
 		$ini = $this->preparedIni();
 		file_put_contents($ini, "me=666\r\nyou=1");
 		(new Ini\Typed($ini))->write(['foo' => 'bar']);
 		Assert::same("me=666\r\nyou=1\r\nfoo=bar\r\n", file_get_contents($ini));
 	}
 
-	public function testWritingWithoutDuplication() {
+	public function testWritingWithoutDuplication(): void {
 		$ini = $this->preparedIni();
 		file_put_contents($ini, "me=666\r\nyou=1");
 		(new Ini\Typed($ini))->write(['me' => 666]);
@@ -83,35 +84,35 @@ final class Typed extends Tester\TestCase {
 		Assert::same("me=666\r\nyou=1\r\n", file_get_contents($ini));
 	}
 
-	public function testRemovingByExistingKey() {
+	public function testRemovingByExistingKey(): void {
 		$ini = $this->preparedIni();
 		file_put_contents($ini, "me=666\r\nyou=1\r\nwe=2");
 		(new Ini\Typed($ini))->remove('you');
 		Assert::same("me=666\r\nwe=2\r\n", file_get_contents($ini));
 	}
 
-	public function testRemovingByUnknownKey() {
+	public function testRemovingByUnknownKey(): void {
 		$ini = $this->preparedIni();
 		file_put_contents($ini, "me=666\r\nyou=1\r\nwe=2");
 		(new Ini\Typed($ini))->remove('xxxxxxxxxxxxxxxxxxxxxxxxx');
 		Assert::same("me=666\r\nyou=1\r\nwe=2\r\n", file_get_contents($ini));
 	}
 
-	public function testRemovingByExistingKeyInSection() {
+	public function testRemovingByExistingKeyInSection(): void {
 		$ini = $this->preparedIni();
 		file_put_contents($ini, "foo=666\r\n[SECTION]\r\nfoo=123\r\n");
 		(new Ini\Typed($ini))->remove('foo', 'SECTION');
 		Assert::same("foo=666\r\n[SECTION]\r\n", file_get_contents($ini));
 	}
 
-	public function testRemovingSameNamedSectionAsKey() {
+	public function testRemovingSameNamedSectionAsKey(): void {
 		$ini = $this->preparedIni();
 		file_put_contents($ini, "foo=666\r\n[bar]\r\nbar=123\r\n");
 		(new Ini\Typed($ini))->remove('bar', 'bar');
 		Assert::same("foo=666\r\n[bar]\r\n", file_get_contents($ini));
 	}
 
-	public function testRemovingNullSection() {
+	public function testRemovingNullSection(): void {
 		$ini = $this->preparedIni();
 		file_put_contents($ini, "foo=666\r\n[null]\r\nbar=123\r\n");
 		(new Ini\Typed($ini))->remove('bar', null);

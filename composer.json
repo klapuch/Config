@@ -4,30 +4,35 @@
   "description": "Easy way how to work with ini files",
   "homepage": "https://github.com/klapuch/Ini",
   "keywords": [
-	"ini",
-	"read",
-	"write"
+    "ini",
+    "read",
+    "write"
   ],
   "authors": [
-	{
-	  "name": "Dominik Klapuch",
-	  "email": "klapuchdominik@gmail.com",
-	  "homepage": "https://www.github.com/klapuch",
-	  "role": "Developer"
-	}
+    {
+      "name": "Dominik Klapuch",
+      "email": "klapuchdominik@gmail.com",
+      "homepage": "https://www.github.com/klapuch",
+      "role": "Developer"
+    }
   ],
   "require": {
-	"php": ">=7.0"
+    "php": ">=7.1"
   },
   "require-dev": {
-	"nette/tester": "^1.7",
-	"sebastian/phpcpd": "*"
+    "nette/tester": "^1.7",
+    "phpstan/phpstan": ">=0.6.0",
+    "jakub-onderka/php-parallel-lint": "^0.9.2",
+    "slevomat/coding-standard": "^2.0.0",
+    "sebastian/phpcpd": "^2.0",
+    "phing/phing": "^2.16",
+    "consistence/coding-standard": "^0.13.0"
   },
   "autoload": {
-	"psr-4": {
-	  "Klapuch\\Ini\\": [
-		"Core/"
-	  ]
-	}
+    "psr-4": {
+      "Klapuch\\Ini\\": [
+        "Core/"
+      ]
+    }
   }
 }
