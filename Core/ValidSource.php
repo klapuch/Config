@@ -6,20 +6,20 @@ namespace Klapuch\Ini;
  * Always valid (exists, writable, readable) file
  */
 final class ValidSource implements Source {
-	private $path;
+	private $file;
 	private $origin;
 
-	public function __construct(string $path, Source $origin) {
-		$this->path = $path;
+	public function __construct(\SplFileInfo $file, Source $origin) {
+		$this->file = $file;
 		$this->origin = $origin;
 	}
 
 	public function read(): array {
-		if (!is_readable($this->path) || !$this->isIni($this->path)) {
+		if (!$this->file->isReadable() || !$this->isIni($this->file)) {
 			throw new \InvalidArgumentException(
 				sprintf(
 					'File "%s" must be readable ini file',
-					$this->path
+					$this->file
 				)
 			);
 		}
@@ -27,11 +27,11 @@ final class ValidSource implements Source {
 	}
 
 	public function write(array $values): void {
-		if (!is_writable($this->path) || !$this->isIni($this->path)) {
+		if (!$this->file->isWritable() || !$this->isIni($this->file)) {
 			throw new \InvalidArgumentException(
 				sprintf(
 					'File "%s" must be writable ini file',
-					$this->path
+					$this->file
 				)
 			);
 		}
@@ -44,10 +44,10 @@ final class ValidSource implements Source {
 
 	/**
 	 * Is the path valid ini file?
-	 * @param string $path
+	 * @param \SplFileInfo $file
 	 * @return bool
 	 */
-	private function isIni(string $path): bool {
-		return strcasecmp(pathinfo($path, PATHINFO_EXTENSION), 'ini') === 0;
+	private function isIni(\SplFileInfo $file): bool {
+		return strcasecmp($file->getExtension(), 'ini') === 0;
 	}
 }

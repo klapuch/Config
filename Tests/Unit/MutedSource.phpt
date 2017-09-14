@@ -17,7 +17,12 @@ final class MutedSource extends Tester\TestCase {
 		Assert::same(
 			[],
 			(new Ini\MutedSource(
-				new Ini\ValidSource('foo.bar', new Ini\TypedSource('foo.bar'))
+				new Ini\ValidSource(
+					new \SplFileInfo('foo.bar'),
+					new Ini\TypedSource(
+						new \SplFileInfo('foo.bar')
+					)
+				)
 			))->read()
 		);
 	}
@@ -27,25 +32,42 @@ final class MutedSource extends Tester\TestCase {
 		Assert::same(
 			['foo' => 'bar'],
 			(new Ini\MutedSource(
-				new Ini\ValidSource($file, new Ini\TypedSource($file))
+				new Ini\ValidSource(
+					new \SplFileInfo($file),
+					new Ini\TypedSource(new \SplFileInfo($file))
+				)
 			))->read()
 		);
 	}
 
 	public function testWritingNothingOnThrownError(): void {
-		Assert::noError(function() {
-			(new Ini\MutedSource(
-				new Ini\ValidSource('foo.bar', new Ini\TypedSource('foo.bar'))
-			))->write(['foo']);
-		});
+		Assert::noError(
+			function() {
+				(new Ini\MutedSource(
+					new Ini\ValidSource(
+						new \SplFileInfo('foo.bar'),
+						new Ini\TypedSource(
+							new \SplFileInfo('foo.bar')
+						)
+					)
+				))->write(['foo']);
+			}
+		);
 	}
 
 	public function testRemovingNothingOnThrownError(): void {
-		Assert::noError(function() {
-			(new Ini\MutedSource(
-				new Ini\ValidSource('foo.bar', new Ini\TypedSource('foo.bar'))
-			))->remove('foo', 'bar');
-		});
+		Assert::noError(
+			function() {
+				(new Ini\MutedSource(
+					new Ini\ValidSource(
+						new \SplFileInfo('foo.bar'),
+						new Ini\TypedSource(
+							new \SplFileInfo('foo.bar')
+						)
+					)
+				))->remove('foo', 'bar');
+			}
+		);
 	}
 }
 

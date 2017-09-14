@@ -17,28 +17,28 @@ final class ValidSource extends Tester\TestCase {
 	 * @throws \InvalidArgumentException File "unknownFile.ini" must be readable ini file
 	 */
 	public function testReadingUnknownFile(): void {
-		(new Ini\ValidSource('unknownFile.ini', new Ini\FakeSource))->read();
+		(new Ini\ValidSource(new \SplFileInfo('unknownFile.ini'), new Ini\FakeSource))->read();
 	}
 
 	/**
 	 * @throws \InvalidArgumentException File "mock://1.txt" must be readable ini file
 	 */
 	public function testReadingNonIniFile(): void {
-		(new Ini\ValidSource($this->preparedTxt(), new Ini\FakeSource))->read();
+		(new Ini\ValidSource(new \SplFileInfo($this->preparedTxt()), new Ini\FakeSource))->read();
 	}
 
 	/**
 	 * @throws \InvalidArgumentException File "unknown.ini" must be writable ini file
 	 */
 	public function testWritingUnknownFile(): void {
-		(new Ini\ValidSource('unknown.ini', new Ini\FakeSource))->write(['foo' => 'bar']);
+		(new Ini\ValidSource(new \SplFileInfo('unknown.ini'), new Ini\FakeSource))->write(['foo' => 'bar']);
 	}
 
 	/**
 	 * @throws \InvalidArgumentException File "mock://1.txt" must be writable ini file
 	 */
 	public function testWritingNonIniFile(): void {
-		(new Ini\ValidSource($this->preparedTxt(), new Ini\FakeSource))->write(
+		(new Ini\ValidSource(new \SplFileInfo($this->preparedTxt()), new Ini\FakeSource))->write(
 			['foo' => 'bar']
 		);
 	}
@@ -46,7 +46,10 @@ final class ValidSource extends Tester\TestCase {
 	public function testWritableFile(): void {
 		Assert::noError(
 			function() {
-				(new Ini\ValidSource($this->preparedIni(), new Ini\FakeSource))->write([]);
+				(new Ini\ValidSource(
+					new \SplFileInfo($this->preparedIni()),
+					new Ini\FakeSource
+				))->write([]);
 			}
 		);
 	}
@@ -54,7 +57,10 @@ final class ValidSource extends Tester\TestCase {
 	public function testReadableFile(): void {
 		Assert::noError(
 			function() {
-				(new Ini\ValidSource($this->preparedIni(), new Ini\FakeSource))->write([]);
+				(new Ini\ValidSource(
+					new \SplFileInfo($this->preparedIni()),
+					new Ini\FakeSource
+				))->write([]);
 			}
 		);
 	}
@@ -63,7 +69,7 @@ final class ValidSource extends Tester\TestCase {
 		Assert::noError(
 			function() {
 				(new Ini\ValidSource(
-					Tester\FileMock::create('', 'iNi'),
+					new \SplFileInfo(Tester\FileMock::create('', 'iNi')),
 					new Ini\FakeSource
 				))->write([]);
 			}
@@ -71,7 +77,7 @@ final class ValidSource extends Tester\TestCase {
 		Assert::noError(
 			function() {
 				(new Ini\ValidSource(
-					Tester\FileMock::create('', 'iNi'),
+					new \SplFileInfo(Tester\FileMock::create('', 'iNi')),
 					new Ini\FakeSource
 				))->read();
 			}

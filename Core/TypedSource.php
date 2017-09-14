@@ -8,22 +8,22 @@ namespace Klapuch\Ini;
 final class TypedSource implements Source {
 	private const PARSE_SECTIONS = true;
 	private const CRLF = "\r\n";
-	private $path;
+	private $ini;
 
-	public function __construct(string $path) {
-		$this->path = $path;
+	public function __construct(\SplFileInfo $ini) {
+		$this->ini = $ini;
 	}
 
 	public function read(): array {
 		return parse_ini_file(
-			$this->path,
+			$this->ini->getPathname(),
 			self::PARSE_SECTIONS,
 			INI_SCANNER_TYPED
 		);
 	}
 
 	public function write(array $values): void {
-		file_put_contents($this->path, $this->toIni($this->read() + $values));
+		file_put_contents($this->ini->getPathname(), $this->toIni($this->read() + $values));
 	}
 
 	public function remove($key, string $section = null): void {
@@ -31,7 +31,7 @@ final class TypedSource implements Source {
 		if ($section === null)
 			unset($ini[$key]);
 		unset($ini[$section][$key]);
-		file_put_contents($this->path, $this->toIni($ini));
+		file_put_contents($this->ini->getPathname(), $this->toIni($ini));
 	}
 
 	/**
