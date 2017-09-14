@@ -13,12 +13,14 @@ final class CombinedSource implements Source {
 	}
 
 	public function read(): array {
-		return array_reduce(
-			$this->origins,
-			function(array $combined, Source $origin): array {
-				return $this->merge($combined, $origin->read());
-			},
-			[]
+		return call_user_func_array(
+			'array_replace_recursive',
+			array_map(
+				function(Source $source): array {
+					return $source->read();
+				},
+				$this->origins
+			)
 		);
 	}
 
@@ -32,16 +34,4 @@ final class CombinedSource implements Source {
 			$origin->remove($key, $section);
 	}
 
-	private function merge(array $array1, array $array2): array {
-		return array_reduce(
-			array_keys($array2),
-			function(array $array1, $key) use ($array2): array {
-				if (is_array($array2[$key]) && isset($array1[$key]) && is_array($array1[$key]))
-					$array1[$key] = $this->merge($array1[$key], $array2[$key]);
-				else $array1[$key] = $array2[$key];
-				return $array1;
-			},
-			$array1
-		);
-	}
 }
