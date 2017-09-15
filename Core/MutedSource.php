@@ -19,13 +19,13 @@ final class MutedSource implements Source {
 	}
 
 	public function write(array $values): void {
-		$this->asMuted(function() use ($values) {
+		$this->asMuted(function() use ($values): void {
 			$this->origin->write($values);
 		});
 	}
 
 	public function remove($key, string $section = null): void {
-		$this->asMuted(function() use ($key, $section) {
+		$this->asMuted(function() use ($key, $section): void {
 			$this->origin->remove($key, $section);
 		});
 	}
