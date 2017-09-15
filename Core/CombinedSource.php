@@ -13,9 +13,8 @@ final class CombinedSource implements Source {
 	}
 
 	public function read(): array {
-		return call_user_func_array(
-			'array_replace_recursive',
-			array_map(
+		return array_replace_recursive(
+			...array_map(
 				function(Source $source): array {
 					return $source->read();
 				},
