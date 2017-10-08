@@ -22,15 +22,4 @@ final class CombinedSource implements Source {
 			)
 		);
 	}
-
-	public function write(array $values): void {
-		foreach ($this->origins as $origin)
-			$origin->write($values);
-	}
-
-	public function remove($key, string $section = null): void {
-		foreach ($this->origins as $origin)
-			$origin->remove($key, $section);
-	}
-
 }

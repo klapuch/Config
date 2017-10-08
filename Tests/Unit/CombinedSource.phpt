@@ -24,7 +24,7 @@ final class CombinedSource extends Tester\TestCase {
 		);
 	}
 
-	public function testNotAffectingOtherDuringCombibing(): void {
+	public function testNotAffectingOtherDuringCombining(): void {
 		Assert::same(
 			['foo' => 'bar', 'bar' => 'baz', 'how' => 'good'],
 			(new Ini\CombinedSource(
@@ -44,26 +44,6 @@ final class CombinedSource extends Tester\TestCase {
 				new Ini\FakeSource(['section' => ['foo' => 'bar']])
 			))->read()
 		);
-	}
-
-	public function testWritingToAll(): void {
-		$a = new Ini\FakeSource(['a' => 'baz']);
-		$b = new Ini\FakeSource(['b' => 'bax']);
-		$c = new Ini\FakeSource(['c' => 'bar']);
-		(new Ini\CombinedSource($a, $b, $c))->write(['how' => 'good']);
-		Assert::same(['a' => 'baz', 'how' => 'good'], $a->read());
-		Assert::same(['b' => 'bax', 'how' => 'good'], $b->read());
-		Assert::same(['c' => 'bar', 'how' => 'good'], $c->read());
-	}
-
-	public function testRemovingFromAll(): void {
-		$a = new Ini\FakeSource(['a' => 'baz', 'how' => 'good']);
-		$b = new Ini\FakeSource(['b' => 'bax', 'how' => 'good']);
-		$c = new Ini\FakeSource(['c' => 'bar', 'how' => 'good']);
-		(new Ini\CombinedSource($a, $b, $c))->remove('how');
-		Assert::same(['a' => 'baz'], $a->read());
-		Assert::same(['b' => 'bax'], $b->read());
-		Assert::same(['c' => 'bar'], $c->read());
 	}
 }
 

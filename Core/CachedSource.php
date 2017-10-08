@@ -18,12 +18,4 @@ final class CachedSource implements Source {
 			$this->read = $this->origin->read();
 		return $this->read;
 	}
-
-	public function write(array $values): void {
-		$this->origin->write($values);
-	}
-
-	public function remove($key, string $section = null): void {
-		$this->origin->remove($key, $section);
-	}
 }

@@ -14,82 +14,48 @@ require __DIR__ . '/../bootstrap.php';
 
 final class ValidSource extends Tester\TestCase {
 	/**
-	 * @throws \InvalidArgumentException File "unknownFile.ini" must be readable ini file
+	 * @throws \UnexpectedValueException File "unknownFile.ini" is not in ini format or does not exist
 	 */
-	public function testReadingUnknownFile(): void {
-		(new Ini\ValidSource(new \SplFileInfo('unknownFile.ini'), new Ini\FakeSource))->read();
+	public function testThrowingOnUnknownFile() {
+		(new Ini\ValidSource(new \SplFileInfo('unknownFile.ini')))->read();
 	}
 
 	/**
-	 * @throws \InvalidArgumentException File "mock://1.txt" must be readable ini file
+	 * @throws \UnexpectedValueException File "mock://1.ini" is not in ini format or does not exist
 	 */
-	public function testReadingNonIniFile(): void {
-		(new Ini\ValidSource(new \SplFileInfo($this->preparedTxt()), new Ini\FakeSource))->read();
+	public function testThrowingOnBadFormat() {
+		(new Ini\ValidSource(new \SplFileInfo(Tester\FileMock::create('!', 'ini'))))->read();
 	}
 
-	/**
-	 * @throws \InvalidArgumentException File "unknown.ini" must be writable ini file
-	 */
-	public function testWritingUnknownFile(): void {
-		(new Ini\ValidSource(new \SplFileInfo('unknown.ini'), new Ini\FakeSource))->write(['foo' => 'bar']);
-	}
-
-	/**
-	 * @throws \InvalidArgumentException File "mock://1.txt" must be writable ini file
-	 */
-	public function testWritingNonIniFile(): void {
-		(new Ini\ValidSource(new \SplFileInfo($this->preparedTxt()), new Ini\FakeSource))->write(
-			['foo' => 'bar']
-		);
-	}
-
-	public function testWritableFile(): void {
+	public function testCaseInsensitiveExtension() {
 		Assert::noError(
 			function() {
 				(new Ini\ValidSource(
-					new \SplFileInfo($this->preparedIni()),
-					new Ini\FakeSource
-				))->write([]);
-			}
-		);
-	}
-
-	public function testReadableFile(): void {
-		Assert::noError(
-			function() {
-				(new Ini\ValidSource(
-					new \SplFileInfo($this->preparedIni()),
-					new Ini\FakeSource
-				))->write([]);
-			}
-		);
-	}
-
-	public function testCaseInsensitiveExtension(): void {
-		Assert::noError(
-			function() {
-				(new Ini\ValidSource(
-					new \SplFileInfo(Tester\FileMock::create('', 'iNi')),
-					new Ini\FakeSource
-				))->write([]);
-			}
-		);
-		Assert::noError(
-			function() {
-				(new Ini\ValidSource(
-					new \SplFileInfo(Tester\FileMock::create('', 'iNi')),
-					new Ini\FakeSource
+					new \SplFileInfo(Tester\FileMock::create('', 'iNi'))
 				))->read();
 			}
 		);
 	}
 
-	private function preparedTxt() {
-		return Tester\FileMock::create('', 'txt');
+	public function testReadingWithSections() {
+		$ini = Tester\FileMock::create('', 'ini');
+		file_put_contents($ini, '[SECTION]foo = bar');
+		Assert::same(
+			['SECTION' => ['foo' => 'bar']],
+			(new Ini\ValidSource(new \SplFileInfo($ini)))->read()
+		);
 	}
 
-	private function preparedIni() {
-		return Tester\FileMock::create('', 'ini');
+	public function testCastedTypes() {
+		$ini = Tester\FileMock::create('', 'ini');
+		file_put_contents(
+			$ini,
+			"number=666\r\ntext=some string\r\nbool=true\r\n10=2"
+		);
+		Assert::same(
+			['number' => 666, 'text' => 'some string', 'bool' => true, 10 => 2],
+			(new Ini\ValidSource(new \SplFileInfo($ini)))->read()
+		);
 	}
 }
 
