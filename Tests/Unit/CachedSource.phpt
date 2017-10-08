@@ -8,7 +8,6 @@ namespace Klapuch\Ini\Unit;
 
 use Klapuch\Ini;
 use Klapuch\Ini\TestCase;
-use Tester;
 use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
