@@ -3,7 +3,7 @@ declare(strict_types = 1);
 namespace Klapuch\Configuration;
 
 /**
- * Always valid (exists, writable, readable) ini file
+ * Always valid (exists, readable) ini file
  */
 final class ValidIni implements Source {
 	private const PARSE_SECTIONS = true;
