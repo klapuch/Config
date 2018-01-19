@@ -4,9 +4,9 @@ declare(strict_types = 1);
  * @testCase
  * @phpVersion > 7.1.0
  */
-namespace Klapuch\Ini\Unit;
+namespace Klapuch\Configuration\Unit;
 
-use Klapuch\Ini;
+use Klapuch\Configuration;
 use Tester;
 use Tester\Assert;
 
@@ -16,10 +16,10 @@ final class CombinedSource extends Tester\TestCase {
 	public function testCombiningFlatWithPrioritizingLast(): void {
 		Assert::same(
 			['foo' => 'bar'],
-			(new Ini\CombinedSource(
-				new Ini\FakeSource(['foo' => 'baz']),
-				new Ini\FakeSource(['foo' => 'bax']),
-				new Ini\FakeSource(['foo' => 'bar'])
+			(new Configuration\CombinedSource(
+				new Configuration\FakeSource(['foo' => 'baz']),
+				new Configuration\FakeSource(['foo' => 'bax']),
+				new Configuration\FakeSource(['foo' => 'bar'])
 			))->read()
 		);
 	}
@@ -27,10 +27,10 @@ final class CombinedSource extends Tester\TestCase {
 	public function testNotAffectingOtherDuringCombining(): void {
 		Assert::same(
 			['foo' => 'bar', 'bar' => 'baz', 'how' => 'good'],
-			(new Ini\CombinedSource(
-				new Ini\FakeSource(['foo' => 'baz']),
-				new Ini\FakeSource(['bar' => 'baz']),
-				new Ini\FakeSource(['foo' => 'bar', 'how' => 'good'])
+			(new Configuration\CombinedSource(
+				new Configuration\FakeSource(['foo' => 'baz']),
+				new Configuration\FakeSource(['bar' => 'baz']),
+				new Configuration\FakeSource(['foo' => 'bar', 'how' => 'good'])
 			))->read()
 		);
 	}
@@ -38,10 +38,10 @@ final class CombinedSource extends Tester\TestCase {
 	public function testCombiningSectionsWithMerge(): void {
 		Assert::same(
 			['section' => ['foo' => 'bar', 'how' => 'good']],
-			(new Ini\CombinedSource(
-				new Ini\FakeSource(['section' => ['foo' => 'baz']]),
-				new Ini\FakeSource(['section' => ['foo' => 'bax', 'how' => 'good']]),
-				new Ini\FakeSource(['section' => ['foo' => 'bar']])
+			(new Configuration\CombinedSource(
+				new Configuration\FakeSource(['section' => ['foo' => 'baz']]),
+				new Configuration\FakeSource(['section' => ['foo' => 'bax', 'how' => 'good']]),
+				new Configuration\FakeSource(['section' => ['foo' => 'bar']])
 			))->read()
 		);
 	}

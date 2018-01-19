@@ -49,7 +49,7 @@
 
 	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
 		<properties>
-			<property name="rootNamespaces" type="array" value="Core=>Klapuch\Ini,Tests=>Klapuch\Ini"/>
+			<property name="rootNamespaces" type="array" value="Core=>Klapuch\Configuration,Tests=>Klapuch\Configuration"/>
 			<property name="extensions" type="array" value="php,phpt"/>
 		</properties>
 	</rule>

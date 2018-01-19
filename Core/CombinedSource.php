@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
-namespace Klapuch\Ini;
+namespace Klapuch\Configuration;
 
 /**
- * Multiple combined ini files behaving as a single one
+ * Multiple combined sources behaving as a single one
  */
 final class CombinedSource implements Source {
 	private $origins;

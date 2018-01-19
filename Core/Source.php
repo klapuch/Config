@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
-namespace Klapuch\Ini;
+namespace Klapuch\Configuration;
 
 interface Source {
 	/**
-	 * Read values from the ini file
+	 * Read values from the source
 	 * @throws \UnexpectedValueException
 	 * @return array
 	 */

@@ -1,7 +1,7 @@
 {
-  "name": "klapuch/ini",
+  "name": "klapuch/configuration",
   "type": "library",
-  "description": "Easy way how to work with ini files",
+  "description": "Easy way how to work with various configuration sources",
   "homepage": "https://github.com/klapuch/Ini",
   "keywords": [
     "ini",
@@ -31,14 +31,14 @@
   },
   "autoload": {
     "psr-4": {
-      "Klapuch\\Ini\\": [
+      "Klapuch\\Configuration\\": [
         "Core/"
       ]
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Klapuch\\Ini\\": [
+      "Klapuch\\Configuration\\": [
         "Tests/"
       ]
     }

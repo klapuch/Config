@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace Klapuch\Ini\TestCase;
+namespace Klapuch\Configuration\TestCase;
 
 trait Mockery {
 	protected function mock(string $class): \Mockery\MockInterface {

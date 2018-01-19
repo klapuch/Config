@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
-namespace Klapuch\Ini;
+namespace Klapuch\Configuration;
 
 /**
  * Always valid (exists, writable, readable) ini file
  */
-final class ValidSource implements Source {
+final class ValidIni implements Source {
 	private const PARSE_SECTIONS = true;
 	private $file;
 
