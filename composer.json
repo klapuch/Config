@@ -2,7 +2,7 @@
   "name": "klapuch/configuration",
   "type": "library",
   "description": "Easy way how to work with various configuration sources",
-  "homepage": "https://github.com/klapuch/Ini",
+  "homepage": "https://github.com/klapuch/Configuration",
   "keywords": [
     "ini",
     "read",
