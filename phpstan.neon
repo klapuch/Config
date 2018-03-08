@@ -1,0 +1,5 @@
+parameters:
+    ignoreErrors:
+        - '~Function apcu_exists not found\.~'
+        - '~Function apcu_store not found\.~'
+        - '~Function apcu_fetch not found\.~'
