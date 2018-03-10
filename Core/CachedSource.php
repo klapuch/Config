@@ -7,15 +7,16 @@ namespace Klapuch\Configuration;
  */
 final class CachedSource implements Source {
 	private $origin;
-	private $read;
+	private $name;
 
-	public function __construct(Source $origin) {
+	public function __construct(Source $origin, string $name) {
 		$this->origin = $origin;
+		$this->name = sprintf('klapuch:configuration:%s', $name);
 	}
 
 	public function read(): array {
-		if ($this->read === null)
-			$this->read = $this->origin->read();
-		return $this->read;
+		if (!apcu_exists($this->name))
+			apcu_store($this->name, $this->origin->read());
+		return apcu_fetch($this->name);
 	}
 }
