@@ -35,7 +35,7 @@ final class CachedSource extends \Tester\TestCase {
 		$origin = $this->mock(Configuration\Source::class);
 		$origin->shouldReceive('read')->never();
 		[$key, $data] = ['config-key', ['abcd']];
-		apcu_store($key, $data);
+		apcu_store(sprintf('klapuch:configuration:', $key), $data);
 		Assert::same($data, (new Configuration\CachedSource($origin, $key))->read());
 		Assert::count(1, apcu_cache_info()['cache_list']);
 		Assert::same($data, apcu_fetch(apcu_cache_info()['cache_list'][0]['info']));

@@ -11,7 +11,7 @@ final class CachedSource implements Source {
 
 	public function __construct(Source $origin, string $name) {
 		$this->origin = $origin;
-		$this->name = $name;
+		$this->name = sprintf('klapuch:configuration:%s',$name);
 	}
 
 	public function read(): array {
