@@ -18,25 +18,27 @@ final class CachedSource extends \Tester\TestCase {
 	public function testMultipleCallsWithSingleExecution() {
 		$origin = $this->mock(Configuration\Source::class);
 		$origin->shouldReceive('read')->once();
-		$response = new Configuration\CachedSource($origin);
+		$response = new Configuration\CachedSource($origin, 'foo');
 		Assert::equal($response->read(), $response->read());
 	}
 
 	public function testCachingToApcu() {
 		$origin = $this->mock(Configuration\Source::class);
-		$origin->shouldReceive('read')->once()->andReturn(['abc']);
-		Assert::same(['abc'], (new Configuration\CachedSource($origin))->read());
+		$data = ['abc'];
+		$origin->shouldReceive('read')->once()->andReturn($data);
+		Assert::same($data, (new Configuration\CachedSource($origin, 'foo'))->read());
 		Assert::count(1, apcu_cache_info()['cache_list']);
-		Assert::same(['abc'], apcu_fetch(apcu_cache_info()['cache_list'][0]['info']));
+		Assert::same($data, apcu_fetch(apcu_cache_info()['cache_list'][0]['info']));
 	}
 
 	public function testReadingStoredValueFromApcu() {
 		$origin = $this->mock(Configuration\Source::class);
 		$origin->shouldReceive('read')->never();
-		apcu_store(spl_object_hash($origin), ['abcd']);
-		Assert::same(['abcd'], (new Configuration\CachedSource($origin))->read());
+		[$key, $data] = ['config-key', ['abcd']];
+		apcu_store($key, $data);
+		Assert::same($data, (new Configuration\CachedSource($origin, $key))->read());
 		Assert::count(1, apcu_cache_info()['cache_list']);
-		Assert::same(['abcd'], apcu_fetch(apcu_cache_info()['cache_list'][0]['info']));
+		Assert::same($data, apcu_fetch(apcu_cache_info()['cache_list'][0]['info']));
 	}
 }
 

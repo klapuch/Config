@@ -7,16 +7,16 @@ namespace Klapuch\Configuration;
  */
 final class CachedSource implements Source {
 	private $origin;
-	private $hash;
+	private $name;
 
-	public function __construct(Source $origin) {
+	public function __construct(Source $origin, string $name) {
 		$this->origin = $origin;
-		$this->hash = spl_object_hash($origin);
+		$this->name = $name;
 	}
 
 	public function read(): array {
-		if (!apcu_exists($this->hash))
-			apcu_store($this->hash, $this->origin->read());
-		return apcu_fetch($this->hash);
+		if (!apcu_exists($this->name))
+			apcu_store($this->name, $this->origin->read());
+		return apcu_fetch($this->name);
 	}
 }
