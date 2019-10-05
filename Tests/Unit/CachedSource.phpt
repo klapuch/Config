@@ -9,36 +9,36 @@ namespace Klapuch\Configuration\Unit;
 use Klapuch\Configuration;
 use Klapuch\Configuration\TestCase;
 use Tester\Assert;
+use Tester\Environment;
 
 require __DIR__ . '/../bootstrap.php';
 
 final class CachedSource extends \Tester\TestCase {
 	use TestCase\Mockery;
 
+	protected function setUp() {
+		parent::setUp();
+		Environment::lock(__CLASS__, __DIR__ . '/../temp');
+	}
+
 	public function testMultipleCallsWithSingleExecution() {
 		$origin = $this->mock(Configuration\Source::class);
 		$origin->shouldReceive('read')->once();
-		$response = new Configuration\CachedSource($origin, 'foo');
+		$response = new Configuration\CachedSource($origin, new \SplFileInfo(__DIR__ . '/../temp'));
 		Assert::equal($response->read(), $response->read());
 	}
 
-	public function testCachingToApcu() {
+	public function testFormatOfCreatedFile() {
 		$origin = $this->mock(Configuration\Source::class);
-		$data = ['abc'];
-		$origin->shouldReceive('read')->once()->andReturn($data);
-		Assert::same($data, (new Configuration\CachedSource($origin, 'foo'))->read());
-		Assert::count(1, apcu_cache_info()['cache_list']);
-		Assert::same($data, apcu_fetch(apcu_cache_info()['cache_list'][0]['info']));
+		$origin->shouldReceive('read')->once()->andReturn(['username' => 'myself']);
+		$response = new Configuration\CachedSource($origin, new \SplFileInfo(__DIR__ . '/../temp'));
+		Assert::equal(['username' => 'myself'], $response->read());
+		Assert::same(sprintf('<?php return %s;', var_export(['username' => 'myself'], true)), file_get_contents(__DIR__ . '/../temp/klapuch_configuration.php'));
 	}
 
-	public function testReadingStoredValueFromApcu() {
-		$origin = $this->mock(Configuration\Source::class);
-		$origin->shouldReceive('read')->never();
-		[$key, $data] = ['config-key', ['abcd']];
-		apcu_store(sprintf('klapuch:configuration:%s', $key), $data);
-		Assert::same($data, (new Configuration\CachedSource($origin, $key))->read());
-		Assert::count(1, apcu_cache_info()['cache_list']);
-		Assert::same($data, apcu_fetch(apcu_cache_info()['cache_list'][0]['info']));
+	protected function tearDown(): void {
+		parent::tearDown();
+		@unlink(__DIR__ . '/../temp/klapuch_configuration.php');
 	}
 }
 

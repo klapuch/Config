@@ -6,17 +6,43 @@ namespace Klapuch\Configuration;
  * Cached source
  */
 final class CachedSource implements Source {
-	private $origin;
-	private $name;
+	private const FILENAME = 'klapuch_configuration.php';
 
-	public function __construct(Source $origin, string $name) {
+	private $origin;
+	private $directory;
+
+	public function __construct(Source $origin, \SplFileInfo $directory) {
 		$this->origin = $origin;
-		$this->name = sprintf('klapuch:configuration:%s', $name);
+		$this->directory = $directory;
 	}
 
 	public function read(): array {
-		if (!apcu_exists($this->name))
-			apcu_store($this->name, $this->origin->read());
-		return apcu_fetch($this->name);
+		$file = new \SplFileInfo($this->directory->getPathname() . DIRECTORY_SEPARATOR . self::FILENAME);
+		if (!$file->isFile()) {
+			$lock = sprintf('%s.lock', $file->getPathname());
+			$handle = fopen($lock, 'c+');
+			if ($handle === false || !flock($handle, LOCK_EX)) {
+				throw new \RuntimeException(\sprintf('Unable to create or acquire exclusive lock on file "%s".', $lock));
+			}
+			if (!$file->isFile()) {
+				$temp = sprintf('%s.temp', $file->getPathname());
+				if (!@file_put_contents($temp, $this->content())) {
+					throw new \RuntimeException(sprintf('Can not write to file "%s"', $temp));
+				}
+				rename($temp, $file->getPathname()); // atomic replace
+				if (function_exists('opcache_invalidate')) {
+					opcache_invalidate($file->getPathname(), true);
+				}
+			}
+			flock($handle, LOCK_UN);
+			fclose($handle);
+			@unlink($lock); // intentionally @ - file may become locked on Windows
+		}
+		return require $file->getPathname();
+	}
+
+	private function content(): string
+	{
+		return sprintf('<?php return %s;', var_export($this->origin->read(), true));
 	}
 }
